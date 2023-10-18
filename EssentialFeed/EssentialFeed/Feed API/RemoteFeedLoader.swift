@@ -16,12 +16,14 @@ public final class RemoteFeedLoader {
         self.client = client
     }
     
+    public typealias Result = LoadFeedResult<Error>
+    
     public enum Error: Swift.Error {
         case connectivity
         case invalidData
     }
     
-    public func load(completion: @escaping(Result<[FeedItem], Error>) -> Void) {
+    public func load(completion: @escaping(LoadFeedResult<Error>) -> Void) {
         client.get(from: url) { [weak self] result in
             guard self != nil else { return }
             
